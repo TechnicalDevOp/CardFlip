@@ -1,11 +1,15 @@
-# Use an official Nginx runtime as a parent image
-FROM nginx:latest
+# Use an official Node.js runtime as a parent image
+FROM node:current-alpine
 
-# Copy the application code to the container
-COPY . /usr/share/nginx/html
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the HTML and CSS files to the container
+COPY . .
 
 # Expose port 80 for the application
 EXPOSE 80
 
-# # Define the command to run the application
-# CMD ["nginx", "-g", "daemon off;"]
+# Serve the HTML and CSS files using the http-server package
+RUN npm install -g http-server
+CMD [ "http-server", "-p", "80" ]
